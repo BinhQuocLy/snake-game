@@ -18,26 +18,22 @@ fn main() {
             .build()
             .unwrap();
 
-    const GRID_UNIT: f64 = 20.0;
-
-    const SNAKE_WIDTH: f64 = GRID_UNIT;
-    const SNAKE_HEIGHT: f64 = GRID_UNIT;
+    const SNAKE_WIDTH: f64 = snake::GRID_UNIT;
+    const SNAKE_HEIGHT: f64 = snake::GRID_UNIT;
     let mut main_snake: Snake = Snake { 
         value: [0.0, 0.0, SNAKE_WIDTH, SNAKE_HEIGHT], 
-        color: [0.0, 0.0, 0.0, 1.0]
+        color: [0.0, 0.0, 0.0, 1.0],
+        direction: SnakeDirection::Right
     };
 
-    const BAIT_WIDTH: f64 = GRID_UNIT;
-    const BAIT_HEIGHT: f64 = GRID_UNIT;
-    let mut bait: Bait = Bait { 
-        value: [5.0 * GRID_UNIT, 5.0 * GRID_UNIT, BAIT_WIDTH, BAIT_HEIGHT], 
+    const BAIT_WIDTH: f64 = snake::GRID_UNIT;
+    const BAIT_HEIGHT: f64 = snake::GRID_UNIT;
+    let bait: Bait = Bait { 
+        value: [5.0 * snake::GRID_UNIT, 5.0 * snake::GRID_UNIT, BAIT_WIDTH, BAIT_HEIGHT], 
         color: [1.0, 0.0, 0.0, 1.0]
     };
 
     let mut game_score: i32 = 0;
-    // let game_score_color: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
-
-    let mut snake_direction: SnakeDirection = SnakeDirection::Right;
 
     let mut time_weight: f32 = utils::get_time_weight();
     while let Some(e) = window.next() {
@@ -45,10 +41,10 @@ fn main() {
             if let Input::Button(button_args) = input {
                 if let Button::Keyboard(key) = button_args.button {
                     match key {
-                        Key::Up => snake_direction = SnakeDirection::Up,
-                        Key::Down => snake_direction = SnakeDirection::Down,
-                        Key::Left => snake_direction = SnakeDirection::Left,
-                        Key::Right => snake_direction = SnakeDirection::Right,
+                        Key::Up => main_snake.direction = SnakeDirection::Up,
+                        Key::Down => main_snake.direction = SnakeDirection::Down,
+                        Key::Left => main_snake.direction = SnakeDirection::Left,
+                        Key::Right => main_snake.direction = SnakeDirection::Right,
                         _ => (),
                     }
                 }
@@ -56,11 +52,11 @@ fn main() {
         }
 
         if utils::is_new_second(time_weight) {
-            match snake_direction {
-                SnakeDirection::Up => main_snake.value[1] -= GRID_UNIT,
-                SnakeDirection::Down => main_snake.value[1] += GRID_UNIT,
-                SnakeDirection::Left => main_snake.value[0] -= GRID_UNIT,
-                SnakeDirection::Right => main_snake.value[0] += GRID_UNIT,
+            match &main_snake.direction {
+                SnakeDirection::Up => main_snake.value[1] -= snake::GRID_UNIT,
+                SnakeDirection::Down => main_snake.value[1] += snake::GRID_UNIT,
+                SnakeDirection::Left => main_snake.value[0] -= snake::GRID_UNIT,
+                SnakeDirection::Right => main_snake.value[0] += snake::GRID_UNIT,
             }
             if &main_snake.value == &bait.value {
                 game_score += 1;
