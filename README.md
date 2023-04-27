@@ -18,12 +18,15 @@ Default:
 - Right
 
 ### Game configurations:
+- Grid unit
 - Speed
 
 ### Snake:
+- Size: 1 grid unit
 - Moving
 
 ### Bait:
+- Size: 1 grid unit
 - Random spawn
 
 ## Have not finished:

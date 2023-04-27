@@ -1,6 +1,5 @@
-pub const GRID_UNIT: f64 = 20.0;
-
 pub struct Game {
+    pub grid_unit: f64,
     pub speed: f64,
     pub score: f32,
     curr_move_weight: f64,
@@ -8,8 +7,9 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new(speed: f64, score: f32) -> Game {
+    pub fn new(grid_unit: f64, speed: f64, score: f32) -> Game {
         Game {
+            grid_unit,
             speed,
             score,
             curr_move_weight: 0.0,

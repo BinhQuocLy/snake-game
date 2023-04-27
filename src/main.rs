@@ -1,12 +1,11 @@
 extern crate piston_window;
 
-mod snake;
-mod utils;
+mod lib;
 
-use crate::snake::Bait;
-use crate::snake::Game;
-use crate::snake::Snake;
-use crate::snake::SnakeDirection;
+use crate::lib::Bait;
+use crate::lib::Game;
+use crate::lib::Snake;
+use crate::lib::SnakeDirection;
 use piston_window::*;
 use rand::Rng;
 
@@ -18,24 +17,24 @@ fn main() {
             .build()
             .unwrap();
 
-    let mut game: Game = Game::new(1.0, 0.0);
+    let mut game: Game = Game::new(20.0, 1.0, 0.0);
 
-    const SNAKE_WIDTH: f64 = snake::GRID_UNIT;
-    const SNAKE_HEIGHT: f64 = snake::GRID_UNIT;
+    let snake_width: f64 = game.grid_unit;
+    let snake_height: f64 = game.grid_unit;
     let mut main_snake: Snake = Snake {
-        value: [0.0, 0.0, SNAKE_WIDTH, SNAKE_HEIGHT],
+        value: [0.0, 0.0, snake_width, snake_height],
         color: [0.0, 0.0, 0.0, 1.0],
         direction: SnakeDirection::Right,
     };
 
-    const BAIT_WIDTH: f64 = snake::GRID_UNIT;
-    const BAIT_HEIGHT: f64 = snake::GRID_UNIT;
+    let bait_width: f64 = game.grid_unit;
+    let bait_height: f64 = game.grid_unit;
     let mut bait: Bait = Bait {
         value: [
-            5.0 * snake::GRID_UNIT,
-            5.0 * snake::GRID_UNIT,
-            BAIT_WIDTH,
-            BAIT_HEIGHT,
+            5.0 * game.grid_unit,
+            5.0 * game.grid_unit,
+            bait_width,
+            bait_height,
         ],
         color: [1.0, 0.0, 0.0, 1.0],
     };
@@ -57,10 +56,10 @@ fn main() {
 
         if game.should_move() {
             match &main_snake.direction {
-                SnakeDirection::Up => main_snake.value[1] -= snake::GRID_UNIT,
-                SnakeDirection::Down => main_snake.value[1] += snake::GRID_UNIT,
-                SnakeDirection::Left => main_snake.value[0] -= snake::GRID_UNIT,
-                SnakeDirection::Right => main_snake.value[0] += snake::GRID_UNIT,
+                SnakeDirection::Up => main_snake.value[1] -= game.grid_unit,
+                SnakeDirection::Down => main_snake.value[1] += game.grid_unit,
+                SnakeDirection::Left => main_snake.value[0] -= game.grid_unit,
+                SnakeDirection::Right => main_snake.value[0] += game.grid_unit,
             }
             if &main_snake.value == &bait.value {
                 game.score += 1.0;
@@ -80,10 +79,10 @@ fn main() {
             if &main_snake.value == &bait.value {
                 let random: f64 = rand::thread_rng().gen_range(0..10) as f64;
                 bait.value = [
-                    random * snake::GRID_UNIT,
-                    random * snake::GRID_UNIT,
-                    BAIT_WIDTH,
-                    BAIT_HEIGHT,
+                    random * game.grid_unit,
+                    random * game.grid_unit,
+                    bait_width,
+                    bait_height,
                 ];
                 rectangle(bait.color, bait.value, context.transform, graphics);
             } else {
