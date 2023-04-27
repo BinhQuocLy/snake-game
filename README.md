@@ -1,5 +1,9 @@
 # Snake game 🐍
 
+Default:
+- Black is the snake.
+- Red is the bait.
+
 <div align='center'>
 
 ![](images\demo.png)
