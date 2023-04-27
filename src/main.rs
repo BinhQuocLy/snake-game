@@ -49,7 +49,7 @@ fn main() {
     let bait_color: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
 
     let mut game_score: i32 = 0;
-    let game_score_color: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
+    // let game_score_color: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
 
     let mut snake_direction: SnakeDirection = SnakeDirection::Right;
 
