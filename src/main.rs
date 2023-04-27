@@ -13,7 +13,7 @@ use rand::Rng;
 fn main() {
     let window_dimensions = [500, 500];
     let mut window: PistonWindow =
-        WindowSettings::new("Hello Piston!", window_dimensions)
+        WindowSettings::new("Snake game", window_dimensions)
             .exit_on_esc(true)
             .build()
             .unwrap();
