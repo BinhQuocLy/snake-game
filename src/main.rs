@@ -5,6 +5,7 @@ mod snake;
 
 use rand::Rng;
 use piston_window::*;
+use crate::snake::Game;
 use crate::snake::Bait;
 use crate::snake::Snake;
 use crate::snake::SnakeDirection;
@@ -34,9 +35,7 @@ fn main() {
         color: [1.0, 0.0, 0.0, 1.0]
     };
 
-    let mut game_score: i32 = 0;
-
-    let mut time_weight: f32 = utils::get_time_weight();
+    let mut game: Game = Game::new(1.0, 0.0);
 
     while let Some(e) = window.next() {
         if let Event::Input(input, _) = &e {
@@ -53,7 +52,7 @@ fn main() {
             }
         }
 
-        if utils::is_new_second(time_weight) {
+        if game.should_move() {
             match &main_snake.direction {
                 SnakeDirection::Up => main_snake.value[1] -= snake::GRID_UNIT,
                 SnakeDirection::Down => main_snake.value[1] += snake::GRID_UNIT,
@@ -61,11 +60,11 @@ fn main() {
                 SnakeDirection::Right => main_snake.value[0] += snake::GRID_UNIT,
             }
             if &main_snake.value == &bait.value {
-                game_score += 1;
-                println!("Score: {}", game_score);
+                game.score += 1.0;
+                println!("Score: {}", &game.score);
             }
         }
-        time_weight = utils::get_time_weight();
+        // time_weight = utils::get_time_weight();
 
         window.draw_2d(&e, |context, graphics, _device| {
             clear([1.0; 4], graphics);
