@@ -6,7 +6,7 @@ Default:
 
 <div align='center'>
 
-![](images\demo.png)
+![](images/demo.png)
 
 </div>
 
