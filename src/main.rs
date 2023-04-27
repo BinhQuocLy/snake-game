@@ -3,6 +3,7 @@ extern crate piston_window;
 mod utils;
 mod snake;
 
+use rand::Rng;
 use piston_window::*;
 use crate::snake::Bait;
 use crate::snake::Snake;
@@ -28,7 +29,7 @@ fn main() {
 
     const BAIT_WIDTH: f64 = snake::GRID_UNIT;
     const BAIT_HEIGHT: f64 = snake::GRID_UNIT;
-    let bait: Bait = Bait { 
+    let mut bait: Bait = Bait { 
         value: [5.0 * snake::GRID_UNIT, 5.0 * snake::GRID_UNIT, BAIT_WIDTH, BAIT_HEIGHT], 
         color: [1.0, 0.0, 0.0, 1.0]
     };
@@ -36,6 +37,7 @@ fn main() {
     let mut game_score: i32 = 0;
 
     let mut time_weight: f32 = utils::get_time_weight();
+
     while let Some(e) = window.next() {
         if let Event::Input(input, _) = &e {
             if let Input::Button(button_args) = input {
@@ -68,7 +70,13 @@ fn main() {
         window.draw_2d(&e, |context, graphics, _device| {
             clear([1.0; 4], graphics);
             rectangle(main_snake.color, main_snake.value, context.transform, graphics);
-            rectangle(bait.color, bait.value, context.transform, graphics);
+            if &main_snake.value == &bait.value {
+                let random: f64 = rand::thread_rng().gen_range(0..10) as f64;
+                bait.value = [random * snake::GRID_UNIT, random * snake::GRID_UNIT, BAIT_WIDTH, BAIT_HEIGHT];
+                rectangle(bait.color, bait.value, context.transform, graphics);
+            } else {
+                rectangle(bait.color, bait.value, context.transform, graphics);
+            }
         });
     }
 }
