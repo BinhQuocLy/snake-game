@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 piston = "0.53.2"
+piston_window = "*"
+rand = "0.8.5"
+find_folder = "*"
