@@ -2,7 +2,7 @@
 
 <div align='center'>
 
-![Demo](images\demo.png)
+![](images\demo.png)
 
 </div>
 
