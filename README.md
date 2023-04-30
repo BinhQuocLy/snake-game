@@ -24,6 +24,7 @@ Default:
 ### Snake:
 - Size: 1 grid unit
 - Moving
+- Growing
 
 ### Bait:
 - Size: 1 grid unit
@@ -31,5 +32,11 @@ Default:
 
 ## Have not finished:
 - Snake death
-- Snake growing
 - UI
+- Resolution
+- Bait spawning location
+
+### Bugs:
+- Bait spawning location == Snake positions
+- Snake moves on his body
+- Snake moves backward
